@@ -1,0 +1,70 @@
+<section class="register-shell">
+  <article class="register-card">
+    <div class="intro-panel">
+      <p class="eyebrow">Create your space</p>
+      <h1>Build a timeline that feels tender, visual, and yours.</h1>
+      <p>
+        Start with a soft profile, then your memories, moods, and milestones can bloom around it.
+      </p>
+    </div>
+
+    <form class="register-form" (ngSubmit)="submit()">
+      <label>
+        <span>Full name</span>
+        <input
+          type="text"
+          [ngModel]="fullName()"
+          (ngModelChange)="fullName.set($event)"
+          name="fullName"
+          placeholder="Your name"
+        />
+      </label>
+
+      <label>
+        <span>Email</span>
+        <input
+          type="email"
+          [ngModel]="email()"
+          (ngModelChange)="email.set($event)"
+          name="email"
+          placeholder="you@example.com"
+        />
+      </label>
+
+      <label>
+        <span>Password</span>
+        <input
+          type="password"
+          [ngModel]="password()"
+          (ngModelChange)="password.set($event)"
+          name="password"
+          placeholder="Choose a safe password"
+        />
+      </label>
+
+      <label>
+        <span>What do you want more of?</span>
+        <select [ngModel]="moodGoal()" (ngModelChange)="moodGoal.set($event)" name="moodGoal">
+          <option value="calm">Calm</option>
+          <option value="joy">Joy</option>
+          <option value="clarity">Clarity</option>
+          <option value="balance">Balance</option>
+        </select>
+      </label>
+
+      <button type="submit" class="primary-button" [disabled]="!canSubmit()">Create account</button>
+
+      @if (submitted()) {
+        <p class="success-note">
+          Registration screen is ready. Once your auth flow is connected, this can post straight to
+          the backend.
+        </p>
+      }
+
+      <p class="switch-link">
+        Already inside?
+        <a routerLink="/login">Sign in</a>
+      </p>
+    </form>
+  </article>
+</section>

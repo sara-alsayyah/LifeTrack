@@ -1,0 +1,24 @@
+<div class="background-stage" aria-hidden="true">
+  <div class="background-overlay" [ngClass]="overlayClass()"></div>
+
+  <div class="background-layer active">
+    <img class="background-media" [src]="activeScene().src" alt="" />
+  </div>
+
+  @if (stagedScene(); as scene) {
+    <div class="background-layer staged" [class.visible]="isTransitioning()">
+      <img class="background-media" [src]="scene.src" alt="" />
+    </div>
+  }
+</div>
+
+<div class="app-shell">
+  <nav class="floating-nav" aria-label="Primary">
+    <a routerLink="/timeline" routerLinkActive="active">Timeline</a>
+    <a routerLink="/analytics" routerLinkActive="active">Analytics</a>
+    <a routerLink="/add-memory" routerLinkActive="active">Add Memory</a>
+    <a routerLink="/login" routerLinkActive="active">Login</a>
+  </nav>
+
+  <router-outlet></router-outlet>
+</div>

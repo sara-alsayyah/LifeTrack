@@ -1,0 +1,75 @@
+<section class="analytics-shell">
+  <header class="analytics-hero">
+    <div>
+      <p class="eyebrow">Emotional analytics</p>
+      <h1>Patterns, pressure points, and the softer wins.</h1>
+      <p>
+        A clean overview of how your recent memories are leaning, with room for richer Mongo-backed
+        insights once your data grows.
+      </p>
+    </div>
+    <a class="ghost-link" routerLink="/timeline">Return to timeline</a>
+  </header>
+
+  <section class="summary-grid">
+    <article class="summary-card">
+      <span>Emotional balance</span>
+      <strong>{{ overview().summary.emotionalBalance }}%</strong>
+      <p>Moments that feel positive, calm, or restorative.</p>
+    </article>
+    <article class="summary-card">
+      <span>Most active theme</span>
+      <strong>{{ overview().summary.topTheme }}</strong>
+      <p>The topic showing up most often across current memories.</p>
+    </article>
+    <article class="summary-card">
+      <span>Private memories</span>
+      <strong>{{ overview().summary.privateMemories }}</strong>
+      <p>Entries currently marked as sensitive or hidden.</p>
+    </article>
+    <article class="summary-card accent">
+      <span>Calm average</span>
+      <strong>{{ calmAverage() }}</strong>
+      <p>Average calm score across the current six-month view.</p>
+    </article>
+  </section>
+
+  <section class="detail-grid">
+    <article class="glass-card trend-card">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow">Trend</p>
+          <h2>Mood by month</h2>
+        </div>
+      </div>
+
+      <div class="bars">
+        @for (point of overview().moodTrend; track point.month) {
+          <div class="bar-group">
+            <div class="bar-stack">
+              <span class="bar happy" [style.height.%]="point.happy"></span>
+              <span class="bar calm" [style.height.%]="point.calm"></span>
+              <span class="bar stressed" [style.height.%]="point.stressed"></span>
+            </div>
+            <strong>{{ point.month }}</strong>
+          </div>
+        }
+      </div>
+    </article>
+
+    <article class="glass-card insight-card">
+      <p class="eyebrow">Readout</p>
+      <h2>What stands out</h2>
+      <p class="feature">
+        Strongest month for joy:
+        <strong>{{ strongestMonth().month }}</strong>
+      </p>
+
+      <div class="highlights">
+        @for (highlight of overview().highlights; track highlight) {
+          <p>{{ highlight }}</p>
+        }
+      </div>
+    </article>
+  </section>
+</section>

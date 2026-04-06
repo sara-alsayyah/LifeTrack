@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    /* Module & target */
+    "module": "commonjs",                  // NestJS works best with CommonJS
+    "target": "ES2021",                    // Modern JS target
+    "moduleResolution": "node",            // Node-style resolution
+    "esModuleInterop": true, 
+    "types": ["node"],              // For default imports from CommonJS modules
+
+    /* Decorators (required by NestJS) */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    /* Output & source maps */
+    "rootDir": "./src", 
+    "outDir": "./dist",                     // Compiled JS output
+    "sourceMap": true,                      // Useful for debugging
+    "removeComments": true,
+
+    /* Strictness & type safety */
+    "strict": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+
+  // "ignoreDeprecations": "6.0",
+    "baseUrl": "./",                         
+    "paths": {
+      "@auth/*": ["src/auth/*"],
+      "@users/*": ["src/users/*"],
+      "@memories/*": ["src/memories/*"],
+      "@analytics/*": ["src/analytics/*"]
+    },
+
+    /* Incremental compilation */
+    "incremental": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

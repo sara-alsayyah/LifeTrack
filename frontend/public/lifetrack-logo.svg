@@ -1,0 +1,28 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="256" rx="72" fill="url(#bg)"/>
+  <circle cx="128" cy="128" r="78" fill="url(#glow)" opacity="0.52"/>
+  <path d="M76 165C76 124.131 109.131 91 150 91H180C180 131.869 146.869 165 106 165H76Z" fill="url(#petalA)"/>
+  <path d="M180 91C180 131.869 146.869 165 106 165H76C76 124.131 109.131 91 150 91H180Z" fill="url(#petalB)" fill-opacity="0.62"/>
+  <path d="M95 177C111.699 162.676 131.927 154.8 153.057 154.8C164.542 154.8 175.761 157.126 186 161.593" stroke="#FFF9F4" stroke-opacity="0.84" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="173" cy="78" r="9" fill="#FFF7F0"/>
+  <circle cx="193" cy="62" r="5.5" fill="#FFF3EB" fill-opacity="0.88"/>
+  <defs>
+    <linearGradient id="bg" x1="31" y1="20" x2="223" y2="233" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F3DADF"/>
+      <stop offset="0.48" stop-color="#D7E4F1"/>
+      <stop offset="1" stop-color="#F6ECE7"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(130 104) rotate(90) scale(108)">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="petalA" x1="88" y1="100" x2="165" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6B7C8"/>
+      <stop offset="1" stop-color="#C7B5E6"/>
+    </linearGradient>
+    <linearGradient id="petalB" x1="168" y1="91" x2="94" y2="168" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8EBBD7"/>
+      <stop offset="1" stop-color="#F7D7D8"/>
+    </linearGradient>
+  </defs>
+</svg>

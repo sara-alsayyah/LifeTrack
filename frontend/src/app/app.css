@@ -1,0 +1,144 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  position: relative;
+}
+
+.background-stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.background-layer,
+.background-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.background-layer {
+  opacity: 0;
+}
+
+.background-layer.active {
+  opacity: 1;
+}
+
+.background-layer.staged {
+  z-index: 1;
+  transition: opacity 1800ms ease;
+}
+
+.background-layer.staged.visible {
+  opacity: 1;
+}
+
+.background-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.95) brightness(0.88);
+  transform: scale(1.04);
+}
+
+.background-overlay {
+  z-index: 2;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 249, 240, 0.28), transparent 20%),
+    radial-gradient(circle at 82% 18%, rgba(244, 214, 187, 0.18), transparent 24%),
+    linear-gradient(180deg, rgba(245, 236, 224, 0.42), rgba(232, 241, 237, 0.54));
+  transition: background 500ms ease;
+}
+
+.background-overlay.overlay-night {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(233, 238, 255, 0.12), transparent 18%),
+    radial-gradient(circle at 78% 12%, rgba(136, 157, 203, 0.16), transparent 22%),
+    linear-gradient(180deg, rgba(31, 39, 61, 0.4), rgba(42, 59, 73, 0.42));
+}
+
+.background-overlay.overlay-analytics {
+  background:
+    radial-gradient(circle at 20% 16%, rgba(255, 244, 228, 0.18), transparent 20%),
+    radial-gradient(circle at 80% 22%, rgba(184, 221, 222, 0.2), transparent 22%),
+    linear-gradient(180deg, rgba(244, 241, 233, 0.46), rgba(221, 236, 234, 0.54));
+}
+
+.background-overlay.overlay-add-memory {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 228, 205, 0.26), transparent 18%),
+    radial-gradient(circle at 82% 18%, rgba(211, 236, 228, 0.22), transparent 24%),
+    linear-gradient(180deg, rgba(250, 240, 229, 0.46), rgba(229, 242, 238, 0.54));
+}
+
+.background-overlay.overlay-auth {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 236, 220, 0.24), transparent 20%),
+    radial-gradient(circle at 84% 14%, rgba(221, 232, 245, 0.16), transparent 20%),
+    linear-gradient(180deg, rgba(246, 235, 226, 0.48), rgba(228, 236, 240, 0.52));
+}
+
+.background-overlay.overlay-night.overlay-analytics {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(170, 196, 219, 0.12), transparent 18%),
+    radial-gradient(circle at 82% 18%, rgba(121, 159, 176, 0.16), transparent 22%),
+    linear-gradient(180deg, rgba(23, 33, 55, 0.48), rgba(28, 52, 65, 0.48));
+}
+
+.background-overlay.overlay-night.overlay-add-memory {
+  background:
+    radial-gradient(circle at 14% 14%, rgba(156, 171, 214, 0.12), transparent 18%),
+    radial-gradient(circle at 80% 16%, rgba(127, 151, 168, 0.16), transparent 22%),
+    linear-gradient(180deg, rgba(28, 36, 58, 0.5), rgba(36, 54, 67, 0.48));
+}
+
+.background-overlay.overlay-night.overlay-auth {
+  background:
+    radial-gradient(circle at 20% 15%, rgba(158, 176, 218, 0.12), transparent 18%),
+    radial-gradient(circle at 82% 18%, rgba(140, 155, 194, 0.16), transparent 22%),
+    linear-gradient(180deg, rgba(27, 36, 58, 0.5), rgba(40, 49, 73, 0.48));
+}
+
+.app-shell {
+  display: grid;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.floating-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  width: min(100%, 52rem);
+  margin: 0 auto;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: 999px;
+  background: rgba(255, 251, 245, 0.66);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 22px 60px rgba(92, 76, 56, 0.12);
+}
+
+.floating-nav a {
+  padding: 0.7rem 1.05rem;
+  border-radius: 999px;
+  color: #685b52;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.floating-nav a:hover,
+.floating-nav a.active {
+  color: #2f3f45;
+  background: linear-gradient(135deg, rgba(245, 202, 168, 0.78), rgba(205, 231, 227, 0.94));
+  transform: translateY(-1px);
+}

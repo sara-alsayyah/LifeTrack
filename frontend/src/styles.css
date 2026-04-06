@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap");
+
+:root {
+  color-scheme: light;
+  font-family: "Outfit", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(255, 233, 200, 0.5), transparent 28%),
+    radial-gradient(circle at 82% 15%, rgba(191, 224, 233, 0.3), transparent 24%),
+    radial-gradient(circle at 18% 86%, rgba(246, 208, 219, 0.24), transparent 26%),
+    linear-gradient(180deg, #f3ead9 0%, #f3f0e3 46%, #e6f1ef 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  scroll-behavior: smooth;
+  background: #e8ede8;
+}
+
+body {
+  min-height: 100vh;
+  color: #4b4d63;
+  background: linear-gradient(180deg, #efe4d7, #e4efe9);
+  filter: saturate(0.98);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(255, 255, 255, 0.2), transparent 18%),
+    radial-gradient(circle at 78% 14%, rgba(252, 226, 191, 0.1), transparent 18%),
+    linear-gradient(180deg, rgba(239, 228, 215, 0.55), rgba(228, 239, 233, 0.66));
+}
+
+body::after {
+  left: -8rem;
+  bottom: -8rem;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(185, 223, 213, 0.2), transparent 72%);
+}
+
+app-root {
+  display: block;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding: clamp(2.25rem, 5vw, 4.5rem) clamp(1rem, 2vw, 1.6rem)
+    clamp(1.25rem, 3vw, 2rem);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(151, 193, 199, 0.85), rgba(236, 189, 176, 0.85));
+  background-clip: padding-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

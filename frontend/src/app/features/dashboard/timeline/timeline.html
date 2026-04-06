@@ -1,0 +1,457 @@
+<section class="dashboard-shell">
+  <div class="scene-background">
+    <div class="scene-haze"></div>
+  </div>
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-logo" src="/lifetrack-logo.svg" alt="LifeTrack logo" />
+      <div class="brand-copy">
+        <p class="eyebrow">Visual memory journal</p>
+        <h1 class="brand-title">
+          <span class="brand-title-life">Life</span><span class="brand-title-track">Track</span>
+        </h1>
+        <p class="brand-note">A gentle archive for memories, moods, and milestones.</p>
+      </div>
+    </div>
+
+    <nav class="topbar-actions">
+      <span class="status-pill">{{ usingFallback() ? 'Demo Mode' : 'Live Archive' }}</span>
+      <span class="status-pill soft-pill">{{ filteredMemories().length }} visible memories</span>
+      <button class="icon-chip" type="button" (click)="reloadMemories()">Sync Memories</button>
+    </nav>
+  </header>
+
+  <section class="hero-panel">
+    <div class="hero-copy">
+      <p class="eyebrow">My digital timeline</p>
+      <h2>Soft memories. Sacred calm.</h2>
+      <p class="hero-text">
+        A dreamy timeline for moments that feel pure, gentle, and deeply yours.
+      </p>
+
+      <div class="hero-actions">
+        <button class="primary-button" type="button" (click)="toggleComposer()">
+          {{ showComposer() ? 'Close Composer' : '+ Add Memory' }}
+        </button>
+        <button class="ghost-button" type="button">Story View</button>
+      </div>
+
+      <div class="metric-strip">
+        @for (card of statCards(); track card.title) {
+          <article class="metric-pill">
+            <strong>{{ card.value }}</strong>
+            <span>{{ card.title }}</span>
+          </article>
+        }
+      </div>
+    </div>
+
+    <div class="hero-mosaic">
+      <article class="mosaic-card tall static-atmosphere">
+        <img
+          src="/images/YoungMe.png"
+          alt="Young me memory"
+        />
+        <div class="mosaic-overlay">
+          <span>Featured memory</span>
+          <strong>Young me</strong>
+        </div>
+      </article>
+
+      <article class="mosaic-card portrait-card birthday-card">
+        <img
+          class="portrait-image birthday-image"
+          src="/images/myBirthday.png"
+          alt="Birthday memory"
+        />
+        <div class="mosaic-overlay compact-overlay">
+          <strong>Birthday glow</strong>
+        </div>
+      </article>
+
+      <article class="mosaic-card portrait-card friend-card">
+        <img
+          class="portrait-image friend-image"
+          src="/images/BestFriend.png"
+          alt="Best friend memory"
+        />
+        <div class="mosaic-overlay compact-overlay">
+          <strong>Best friend</strong>
+        </div>
+      </article>
+
+      <article class="mosaic-stat">
+        <span class="eyebrow">Current vibe</span>
+        <strong>Soft, girly, alive</strong>
+      </article>
+    </div>
+  </section>
+
+  <div class="dashboard-grid">
+    <section class="timeline-panel">
+        @if (isLoading()) {
+          <div class="status-banner">Loading memories from your backend...</div>
+        }
+
+        @if (loadError()) {
+          <div class="status-banner warning">
+            <span>{{ loadError() }}</span>
+            <button type="button" class="text-button" (click)="reloadMemories()">Retry</button>
+          </div>
+        }
+
+        @if (usingFallback()) {
+          <div class="status-banner soft">
+            Demo view active. Start Nest + MongoDB for live data.
+          </div>
+        }
+
+        @if (showComposer()) {
+          <article class="composer-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Quick capture</p>
+                <h3>New memory</h3>
+              </div>
+              <span class="sparkle">Fast add</span>
+            </div>
+
+            <div class="composer-grid">
+              <label>
+                <span>Title</span>
+                <input
+                  type="text"
+                  [ngModel]="draft().title"
+                  (ngModelChange)="updateDraft('title', $event)"
+                  placeholder="Graduation, road trip, beach day..."
+                />
+              </label>
+
+              <label>
+                <span>Date</span>
+                <input
+                  type="date"
+                  [ngModel]="draft().date"
+                  (ngModelChange)="updateDraft('date', $event)"
+                />
+              </label>
+
+              <label>
+                <span>Mood</span>
+                <select
+                  [ngModel]="draft().mood"
+                  (ngModelChange)="updateDraft('mood', $event)"
+                >
+                  <option value="happy">Happy</option>
+                  <option value="calm">Calm</option>
+                  <option value="reflective">Reflective</option>
+                  <option value="stressed">Stressed</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Location</span>
+                <input
+                  type="text"
+                  [ngModel]="draft().location"
+                  (ngModelChange)="updateDraft('location', $event)"
+                  placeholder="Where?"
+                />
+              </label>
+
+              <label class="full-width">
+                <span>Description</span>
+                <textarea
+                  rows="3"
+                  [ngModel]="draft().description"
+                  (ngModelChange)="updateDraft('description', $event)"
+                  placeholder="One brief note is enough."
+                ></textarea>
+              </label>
+
+              <label class="full-width">
+                <span>Tags</span>
+                <input
+                  type="text"
+                  [ngModel]="draft().tags.join(', ')"
+                  (ngModelChange)="parseTags($event)"
+                  placeholder="Travel, Study, Family"
+                />
+              </label>
+            </div>
+
+            @if (saveError()) {
+              <p class="form-error">{{ saveError() }}</p>
+            }
+
+            <button class="primary-button wide" type="button" (click)="saveMemory()">
+              {{ isSaving() ? 'Saving...' : 'Save Memory' }}
+            </button>
+          </article>
+        }
+
+        <div class="timeline-header">
+          <div>
+            <p class="eyebrow">Visual timeline</p>
+            <h3>{{ filteredMemories().length }} scenes from your story</h3>
+          </div>
+        </div>
+
+        <div class="timeline-line">
+          @for (group of groupedMemories(); track trackGroup($index, group)) {
+            <section class="month-group">
+              <div class="group-marker">
+                <span></span>
+                <div>
+                  <h4>{{ group.label }}</h4>
+                  <p>{{ group.count }} cards</p>
+                </div>
+              </div>
+
+              <div class="memory-grid">
+                @for (memory of group.memories; track trackMemory($index, memory)) {
+                  <article
+                    class="memory-card {{ memory.accent }}"
+                    [class.private-card]="memory.isPrivate"
+                    (click)="openMemory(memory)"
+                  >
+                    <div class="memory-cover">
+                      <img
+                        [src]="memory.coverImage"
+                        [alt]="memory.title"
+                        [class.portrait-memory]="memory.coverImage.includes('myBirthday.png') || memory.coverImage.includes('BestFriend.png')"
+                        [class.birthday-memory]="memory.coverImage.includes('myBirthday.png')"
+                        [class.friend-memory]="memory.coverImage.includes('BestFriend.png')"
+                      />
+                      <div class="memory-cover-overlay">
+                        <span class="memory-mood">{{ memory.moodLabel }}</span>
+                        @if (memory.isPrivate) {
+                          <span class="private-badge">Private</span>
+                        }
+                      </div>
+                      <div class="image-caption">
+                        <strong>{{ memory.title }}</strong>
+                      </div>
+                    </div>
+
+                    <div class="memory-body">
+                      <div class="memory-topline">
+                        <span>{{ formatDate(memory.date) }}</span>
+                        <span>{{ memory.location }}</span>
+                      </div>
+
+                      <h5>{{ memory.title }}</h5>
+
+                      <p class="memory-description">{{ memory.description }}</p>
+
+                      <div class="memory-footer">
+                        <div class="tag-row">
+                          @for (tag of memory.tags; track tag) {
+                            <span class="tag-chip">{{ tag }}</span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                }
+              </div>
+            </section>
+          } @empty {
+            <article class="empty-state">
+              <h4>No memories match the current filters.</h4>
+              <p>Try another mood, tag, or date range.</p>
+            </article>
+          }
+        </div>
+      </section>
+
+      <aside class="insights-panel">
+        <article class="glass-card chart-card">
+          <div class="card-heading compact">
+            <div>
+              <p class="eyebrow">Mood map</p>
+              <h3>Emotional rhythm</h3>
+            </div>
+            <span class="sparkle">6 months</span>
+          </div>
+
+          <svg viewBox="0 0 340 120" class="chart">
+            <path class="chart-grid" d="M 0 90 H 340 M 0 60 H 340 M 0 30 H 340"></path>
+            <path class="chart-line happy" [attr.d]="moodSeries().happyPath"></path>
+            <path class="chart-line stressed" [attr.d]="moodSeries().stressedPath"></path>
+            <path class="chart-line calm" [attr.d]="moodSeries().calmPath"></path>
+
+            @for (point of moodSeries().happy; track $index) {
+              <circle class="chart-dot happy" [attr.cx]="$index * 62 + 12" [attr.cy]="90 - point" r="4"></circle>
+            }
+
+            @for (point of moodSeries().stressed; track $index) {
+              <circle
+                class="chart-dot stressed"
+                [attr.cx]="$index * 62 + 12"
+                [attr.cy]="90 - point"
+                r="4"
+              ></circle>
+            }
+          </svg>
+
+          <div class="chart-labels">
+            @for (month of moodSeries().months; track month) {
+              <span>{{ month }}</span>
+            }
+          </div>
+
+          <div class="legend">
+            <span><i class="legend-dot happy"></i> Joy</span>
+            <span><i class="legend-dot stressed"></i> Stress</span>
+            <span><i class="legend-dot calm"></i> Calm</span>
+          </div>
+        </article>
+
+        <article class="glass-card spotlight-card">
+          <img src="/images/cat.png" alt="Calm cat memory" />
+          <div class="spotlight-overlay">
+            <p class="eyebrow">Night mood</p>
+            <strong>Little comfort</strong>
+          </div>
+        </article>
+
+        <article class="glass-card insight-strip">
+          <article class="insight-block">
+            <strong>{{ topInsight().happyTravelShare }}%</strong>
+            <span>Happy travel memories</span>
+          </article>
+          <article class="insight-block">
+            <strong>{{ topInsight().studyStressShare }}%</strong>
+            <span>Study-related stress</span>
+          </article>
+        </article>
+
+        <article class="glass-card control-card">
+          <div class="card-heading compact">
+            <div>
+              <p class="eyebrow">Filters</p>
+              <h3>Quick controls</h3>
+            </div>
+          </div>
+
+          <button class="toggle-row" type="button" (click)="togglePrivacy()">
+            <span>
+              <strong>Privacy Mode</strong>
+              <small>Hide private cards</small>
+            </span>
+            <span class="toggle" [class.active]="privacyMode()"></span>
+          </button>
+
+          <button class="toggle-row" type="button" (click)="toggleSensitiveLock()">
+            <span>
+              <strong>Sensitive Lock</strong>
+              <small>Extra protection</small>
+            </span>
+            <span class="toggle" [class.active]="sensitiveLock()"></span>
+          </button>
+
+          <div class="filter-grid">
+            <label class="full-width">
+              <span>Search</span>
+              <input
+                type="text"
+                [ngModel]="searchTerm()"
+                (ngModelChange)="updateSearch($event)"
+                placeholder="Search..."
+              />
+            </label>
+
+            <label>
+              <span>Mood</span>
+              <select [ngModel]="selectedMood()" (ngModelChange)="updateMood($event)">
+                <option value="all">All</option>
+                <option value="happy">Happy</option>
+                <option value="calm">Calm</option>
+                <option value="reflective">Reflective</option>
+                <option value="stressed">Stressed</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Range</span>
+              <select [ngModel]="selectedRange()" (ngModelChange)="updateRange($event)">
+                <option value="90">3 Months</option>
+                <option value="180">6 Months</option>
+                <option value="365">1 Year</option>
+                <option value="all">All</option>
+              </select>
+            </label>
+
+            <label class="full-width">
+              <span>Tag</span>
+              <select [ngModel]="selectedTag()" (ngModelChange)="updateTag($event)">
+                <option value="all">All tags</option>
+                @for (tag of availableTags(); track tag) {
+                  <option [value]="tag">{{ tag }}</option>
+                }
+              </select>
+            </label>
+          </div>
+        </article>
+      </aside>
+    </div>
+  @if (selectedMemory(); as memory) {
+    <div class="modal-backdrop" (click)="closeMemory()">
+      <article class="memory-modal" (click)="$event.stopPropagation()">
+        <button class="close-button" type="button" (click)="closeMemory()">Close</button>
+
+        <div class="modal-cover">
+          <img
+            [src]="memory.coverImage"
+            [alt]="memory.title"
+            [class.portrait-memory]="memory.coverImage.includes('myBirthday.png') || memory.coverImage.includes('BestFriend.png')"
+            [class.birthday-memory]="memory.coverImage.includes('myBirthday.png')"
+            [class.friend-memory]="memory.coverImage.includes('BestFriend.png')"
+          />
+          <div class="modal-cover-overlay">
+            <p class="eyebrow">Memory detail</p>
+            <h3>{{ memory.title }}</h3>
+            <p>{{ formatDate(memory.date) }} - {{ memory.location }}</p>
+          </div>
+        </div>
+
+        <div class="modal-content">
+          <div class="modal-section modal-meta">
+            <span class="memory-mood">{{ memory.moodLabel }}</span>
+            @if (memory.isPrivate) {
+              <span class="private-badge">Private</span>
+            }
+          </div>
+
+          <div class="modal-section">
+            <p>{{ memory.description }}</p>
+          </div>
+
+          <div class="modal-section quote-block">
+            <p>{{ memory.highlight }}</p>
+          </div>
+
+          <div class="modal-section">
+            <div class="tag-row">
+              @for (tag of memory.tags; track tag) {
+                <span class="tag-chip">{{ tag }}</span>
+              }
+            </div>
+          </div>
+
+          @if (deleteError()) {
+            <p class="form-error">{{ deleteError() }}</p>
+          }
+
+          <div class="modal-actions">
+            <button class="ghost-button" type="button" (click)="closeMemory()">Done</button>
+            <button class="danger-button" type="button" (click)="deleteSelectedMemory()">
+              {{ isDeleting() ? 'Deleting...' : 'Delete Memory' }}
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  }
+</section>

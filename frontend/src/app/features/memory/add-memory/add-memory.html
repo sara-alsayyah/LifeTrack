@@ -1,0 +1,97 @@
+<section class="memory-shell">
+  <article class="memory-card">
+    <div class="hero-panel">
+      <p class="eyebrow">Memory composer</p>
+      <h1>Capture the scene while it still feels alive.</h1>
+      <p>
+        Add a title, a soft note, and just enough context for your future self to step back into
+        it.
+      </p>
+      <a class="secondary-link" routerLink="/timeline">Back to timeline</a>
+    </div>
+
+    <form class="memory-form" (ngSubmit)="submit()">
+      <label>
+        <span>Title</span>
+        <input
+          type="text"
+          [ngModel]="draft().title"
+          (ngModelChange)="updateField('title', $event)"
+          name="title"
+          placeholder="Late-night drive, graduation, seaside cafe..."
+        />
+      </label>
+
+      <div class="split-grid">
+        <label>
+          <span>Date</span>
+          <input
+            type="date"
+            [ngModel]="draft().date"
+            (ngModelChange)="updateField('date', $event)"
+            name="date"
+          />
+        </label>
+
+        <label>
+          <span>Mood</span>
+          <select
+            [ngModel]="draft().mood"
+            (ngModelChange)="updateField('mood', $event)"
+            name="mood"
+          >
+            <option value="happy">Happy</option>
+            <option value="calm">Calm</option>
+            <option value="reflective">Reflective</option>
+            <option value="stressed">Stressed</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        <span>Location</span>
+        <input
+          type="text"
+          [ngModel]="draft().location"
+          (ngModelChange)="updateField('location', $event)"
+          name="location"
+          placeholder="Where were you?"
+        />
+      </label>
+
+      <label>
+        <span>Description</span>
+        <textarea
+          rows="6"
+          [ngModel]="draft().description"
+          (ngModelChange)="updateField('description', $event)"
+          name="description"
+          placeholder="What did it feel like? What mattered most?"
+        ></textarea>
+      </label>
+
+      <label>
+        <span>Tags</span>
+        <input
+          type="text"
+          [ngModel]="draft().tags.join(', ')"
+          (ngModelChange)="updateTags($event)"
+          name="tags"
+          placeholder="Travel, Family, Study"
+        />
+      </label>
+
+      <button type="submit" class="primary-button">
+        {{ isSaving() ? 'Saving...' : 'Save memory' }}
+      </button>
+
+      @if (saveState() === 'success') {
+        <p class="success-note">Memory saved. It should now appear in your timeline.</p>
+      }
+
+      @if (saveState() === 'error') {
+        <p class="error-note">{{ errorMessage() }}</p>
+      }
+    </form>
+  </article>
+</section>

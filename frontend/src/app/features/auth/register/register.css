@@ -1,0 +1,112 @@
+.register-shell {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 10rem);
+}
+
+.register-card {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  width: min(100%, 64rem);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 2rem;
+  overflow: hidden;
+  background: rgba(255, 252, 247, 0.74);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 26px 70px rgba(95, 76, 48, 0.14);
+}
+
+.intro-panel,
+.register-form {
+  padding: clamp(1.7rem, 4vw, 3rem);
+}
+
+.intro-panel {
+  background:
+    radial-gradient(circle at bottom left, rgba(182, 224, 219, 0.58), transparent 32%),
+    linear-gradient(180deg, rgba(255, 238, 220, 0.86), rgba(255, 255, 255, 0.34));
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: #886a5d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0 0 1rem;
+  color: #2f343f;
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.05;
+}
+
+.intro-panel p {
+  color: #575d6c;
+  line-height: 1.7;
+}
+
+.register-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.register-form label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.register-form span {
+  color: #4b5260;
+  font-weight: 600;
+}
+
+.register-form input,
+.register-form select {
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(145, 149, 170, 0.24);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.primary-button {
+  padding: 0.95rem 1.2rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f1bf96, #a6d6cb);
+  color: #22343b;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.success-note {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  color: #57606e;
+  background: rgba(213, 239, 234, 0.74);
+}
+
+.switch-link {
+  margin: 0;
+  color: #5c6270;
+}
+
+.switch-link a {
+  color: #275c63;
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .register-card {
+    grid-template-columns: 1fr;
+  }
+}
